@@ -1,0 +1,47 @@
+<div class="flash"><%= flash[:destroy] %></div>
+
+<h1 class="title">Books</h1>
+<table>
+  <thead>
+    <tr>
+      <th>Title</th>
+      <th>Body</th>
+    </tr>
+  </thead>
+  <tbody>
+  <% @books.each do |b| %>
+    <tr>
+      <td><%= b.title %></td>
+      <td><%= b.body %></td>
+      <td><%= link_to "Show", book_path(b) %></td>
+      <td><%= link_to "Edit", edit_book_path(b) %></td>
+      <td><%= link_to "Destroy", book_path(b), method: :delete, "data-confirm" => "Are you sure?" %></td>
+    </tr>
+  <% end %>
+  </tbody>
+</table>
+
+<h2 class="form-title">New book</h2>
+
+<% if @book.errors.any? %>
+  <div id="error_explanation">
+    <h2><%= @book.errors.count %>errors prohibited this book from bing saved:</h2>
+    <ul>
+      <% @book.errors.full_messages.each do |error| %>
+      <li><%= error %></li>
+      <% end %>
+    </ul>
+  </div>
+<% end %>
+
+<%= form_with model:@book, local: true do |t| %>
+  <div class="with">
+    <p>Title</p>
+    <%= t.text_field :title %>
+  </div>
+  <div class="with">
+    <P>Body</P>
+    <%= t.text_area :body %>
+  </div>
+  <p><%= t.submit "Create Book" %></p>
+<% end %>
